@@ -1,0 +1,27 @@
+ALTER TABLE `live_events` ADD `zoom_url` VARCHAR(255) NULL DEFAULT NULL AFTER `language_id`, ADD `zoom_id` VARCHAR(50) NOT NULL AFTER `zoom_url`, ADD `zoom_type` VARCHAR(255) NOT NULL AFTER `zoom_id`, ADD `zoom_uuid` VARCHAR(255) NOT NULL AFTER `zoom_type`, ADD `zoom_status` VARCHAR(255) NOT NULL AFTER `zoom_uuid`, ADD `occurrence_id` VARCHAR(50) NOT NULL AFTER `zoom_status`, ADD `started_by` INT(11) NOT NULL AFTER `occurrence_id`, ADD `event_status` ENUM('NOT_STARTED','STARTED','ENDED') NOT NULL AFTER `started_by`;
+ALTER TABLE `popup_models` ADD `link` TEXT NULL DEFAULT NULL AFTER `image`;
+CREATE TABLE `zoom_meeting_types` (
+  `id` int(11) NOT NULL,
+  `label` varchar(255) NOT NULL,
+  `value` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `zoom_meeting_types` (`id`, `label`, `value`, `created_at`) VALUES
+(1, 'Instant Meeting', 1, '2021-05-08 18:11:07'),
+(2, 'Scheduled Meeting', 2, '2021-05-08 18:11:07'),
+(3, 'Reccuring meeting with no fixed time', 3, '2021-05-08 18:11:07'),
+(4, 'Reccuring meeting with fixed time', 8, '2021-05-08 18:11:07'),
+(5, 'Webiner', 5, '2021-05-24 08:12:27'),
+(6, 'Recurring webinar with no fixed time.', 6, '2021-05-25 18:35:19'),
+(7, 'Recurring webinar with fixed time.', 9, '2021-05-25 18:35:19');
+
+ALTER TABLE `zoom_meeting_types`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `zoom_meeting_types`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+COMMIT;
+
+INSERT INTO `settings` (`id`, `label`, `key`, `parent`, `value`, `can_update`, `reference`, `type`, `watch`, `created_at`) VALUES (NULL, 'Zoom Auth', 'zoomAuth', NULL, NULL, '1', NULL, NULL, NULL, CURRENT_TIMESTAMP), (NULL, 'Api Key', 'apiKey', '66', 'vilaznUwTzGOUR-CZr587w', '1', NULL, 'text', NULL, CURRENT_TIMESTAMP), (NULL, 'Api Secret', 'apiSecret', '66', '7TMrCMys93kEPHkqCewB36oV05mTq9zIGsjD', '1', NULL, 'text', NULL, CURRENT_TIMESTAMP);
+ALTER TABLE `live_events` CHANGE `views` `views` INT(50) NOT NULL DEFAULT '0';

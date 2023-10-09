@@ -1,0 +1,2295 @@
+-- phpMyAdmin SQL Dump
+-- version 5.0.2
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: May 26, 2021 at 12:12 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.6
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `app_eduplus_branery`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `academic_details`
+--
+
+CREATE TABLE `academic_details` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `degree` varchar(255) NOT NULL,
+  `institute` varchar(255) NOT NULL,
+  `passing_year` varchar(255) NOT NULL,
+  `marks` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `addresses`
+--
+
+CREATE TABLE `addresses` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `zip_code` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `state_code` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_notifications`
+--
+
+CREATE TABLE `admin_notifications` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `reciever_id` int(11) DEFAULT NULL,
+  `notification` mediumtext DEFAULT NULL,
+  `redirect_url` varchar(255) DEFAULT NULL,
+  `icon` varchar(255) DEFAULT NULL,
+  `viewed` tinyint(4) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `announcements`
+--
+
+CREATE TABLE `announcements` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `link` varchar(255) DEFAULT NULL,
+  `description` mediumtext DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `position` int(21) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `app_modules`
+--
+
+CREATE TABLE `app_modules` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `referance` varchar(255) NOT NULL,
+  `is_active` tinyint(2) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attributes`
+--
+
+CREATE TABLE `attributes` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` mediumtext DEFAULT NULL,
+  `slug` varchar(255) NOT NULL DEFAULT '',
+  `is_optional_values` tinyint(2) NOT NULL DEFAULT 0,
+  `referance` varchar(255) DEFAULT NULL,
+  `editable` tinyint(2) NOT NULL DEFAULT '1',
+  `filterable` tinyint(2) NOT NULL DEFAULT 0,
+  `is_required` tinyint(1) NOT NULL DEFAULT 0,
+  `position` int(50) NOT NULL DEFAULT '1',
+  `is_multiple` tinyint(2) NOT NULL DEFAULT 0,
+  `is_active` tinyint(2) NOT NULL DEFAULT '1',
+  `hidden` tinyint(4) NOT NULL DEFAULT 0,
+  `applied_as` enum('MANUAL','AUTOMATIC') NOT NULL DEFAULT 'AUTOMATIC',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attribute_referances`
+--
+
+CREATE TABLE `attribute_referances` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `model` varchar(255) NOT NULL,
+  `fetch_condition` mediumtext DEFAULT NULL,
+  `fetcher` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attribute_values`
+--
+
+CREATE TABLE `attribute_values` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `attribute_id` int(11) NOT NULL,
+  `is_active` int(2) NOT NULL DEFAULT '1',
+  `is_priced` tinyint(2) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `banners`
+--
+
+CREATE TABLE `banners` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `image` mediumtext NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `approved` tinyint(4) NOT NULL DEFAULT '1',
+  `created_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_active` tinyint(2) NOT NULL DEFAULT '1',
+  `position` int(50) NOT NULL DEFAULT '1',
+  `rejected_on` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `batches`
+--
+
+CREATE TABLE `batches` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `faculty_id` int(50) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `day` varchar(255) DEFAULT NULL,
+  `start_time` varchar(255) DEFAULT NULL,
+  `end_time` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `approved` tinyint(1) NOT NULL DEFAULT '1',
+  `position` int(21) NOT NULL DEFAULT '1',
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `created_by` int(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `batch_schedules`
+--
+
+CREATE TABLE `batch_schedules` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `batch_id` int(11) NOT NULL,
+  `day` varchar(50) NOT NULL,
+  `start_time` varchar(50) NOT NULL,
+  `end_time` varchar(50) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blogs`
+--
+
+CREATE TABLE `blogs` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `exam_ids` mediumtext DEFAULT NULL,
+  `course_ids` mediumtext DEFAULT NULL,
+  `subject_ids` mediumtext DEFAULT NULL,
+  `chapter_ids` mediumtext DEFAULT NULL,
+  `title` varchar(512) NOT NULL,
+  `slug` varchar(512) NOT NULL,
+  `position` int(50) NOT NULL DEFAULT '1',
+  `body` mediumtext NOT NULL,
+  `image` text DEFAULT NULL,
+  `views` int(11) NOT NULL DEFAULT 0,
+  `approved` tinyint(4) NOT NULL DEFAULT '1',
+  `created_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_active` int(4) NOT NULL DEFAULT '1',
+  `rejected_on` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blog_comments`
+--
+
+CREATE TABLE `blog_comments` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `post_id` int(11) UNSIGNED NOT NULL,
+  `comment` text NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `carts`
+--
+
+CREATE TABLE `carts` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `order_id` int(11) UNSIGNED DEFAULT NULL,
+  `product_id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `uuid` varchar(255) DEFAULT NULL,
+  `base_price` double(10,2) NOT NULL,
+  `quantity` int(50) NOT NULL DEFAULT '1',
+  `coupon_id` int(11) DEFAULT NULL,
+  `coupon_code` varchar(255) DEFAULT NULL,
+  `discount_type` enum('PERCENT','AMOUNT') DEFAULT NULL,
+  `fixed_discount_type` enum('AMOUNT','PERCENT') DEFAULT NULL,
+  `fixed_discount_amount` double(10,2) DEFAULT NULL,
+  `discount_amount_upto` double(10,2) DEFAULT NULL,
+  `discount_amount` double(10,2) DEFAULT NULL,
+  `amount` double(10,2) NOT NULL,
+  `amount_per_quantity` double(10,2) NOT NULL DEFAULT 0.00,
+  `coupon_type` varchar(255) DEFAULT NULL,
+  `tax_amount` double(10,2) NOT NULL DEFAULT 0.00,
+  `tax_amount_type` varchar(255) DEFAULT NULL,
+  `status` enum('ADDED','PURCHESED','DELETED') NOT NULL DEFAULT 'ADDED',
+  `is_upgraded` int(50) DEFAULT NULL,
+  `tax_included_in_base_price` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chapters`
+--
+
+CREATE TABLE `chapters` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `exam_ids` mediumtext DEFAULT NULL,
+  `name` varchar(512) NOT NULL,
+  `course_ids` mediumtext DEFAULT NULL,
+  `subject_ids` mediumtext DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `position` int(50) DEFAULT NULL,
+  `views` int(50) NOT NULL DEFAULT 0,
+  `group_id` varchar(255) DEFAULT NULL,
+  `approved` tinyint(4) NOT NULL DEFAULT '1',
+  `created_by` int(11) DEFAULT NULL,
+  `rejected_on` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `post_id` int(11) UNSIGNED NOT NULL,
+  `comment` text NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comment_replies`
+--
+
+CREATE TABLE `comment_replies` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `comment_id` int(11) UNSIGNED NOT NULL,
+  `reply` mediumtext NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `compatibilities`
+--
+
+CREATE TABLE `compatibilities` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `is_active` tinyint(2) NOT NULL DEFAULT '1',
+  `position` int(50) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `coupons`
+--
+
+CREATE TABLE `coupons` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `discount_type` enum('PERCENT','AMOUNT') NOT NULL DEFAULT 'PERCENT',
+  `amount` double(10,2) NOT NULL,
+  `description` mediumtext DEFAULT NULL,
+  `type` enum('DISCOUNT','COUPON') NOT NULL DEFAULT 'COUPON',
+  `usage_count` int(50) NOT NULL DEFAULT 0,
+  `individual_use` tinyint(2) DEFAULT 0,
+  `referance_ids` mediumtext DEFAULT NULL,
+  `referance_type` enum('product','exam','course') NOT NULL DEFAULT 'product',
+  `usage_limit` int(50) DEFAULT NULL,
+  `minimum_amount` double(10,2) DEFAULT NULL,
+  `maximum_amount` double(10,2) DEFAULT NULL,
+  `amount_upto` double(10,2) DEFAULT NULL,
+  `email_restrictions` mediumtext DEFAULT NULL,
+  `applied_on` enum('AUTOMATIC','MANUAL') NOT NULL DEFAULT 'MANUAL',
+  `automatic_discount_type_id` int(11) DEFAULT NULL,
+  `expiry_date` date DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `position` int(50) NOT NULL DEFAULT '1',
+  `is_active` tinyint(2) NOT NULL DEFAULT '1',
+  `suggested` tinyint(2) NOT NULL DEFAULT 0,
+  `first_order` tinyint(2) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `courses`
+--
+
+CREATE TABLE `courses` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `exam_ids` mediumtext DEFAULT NULL,
+  `description` mediumtext DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) DEFAULT NULL,
+  `thumbnail` varchar(255) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `views` int(50) NOT NULL DEFAULT 0,
+  `position` int(50) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `course_types`
+--
+
+CREATE TABLE `course_types` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `include_ids` mediumtext DEFAULT NULL,
+  `description` mediumtext DEFAULT NULL,
+  `position` int(50) NOT NULL DEFAULT '1',
+  `is_active` tinyint(2) NOT NULL DEFAULT '1',
+  `cretaed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `days`
+--
+
+CREATE TABLE `days` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `day` varchar(50) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `discount_types`
+--
+
+CREATE TABLE `discount_types` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `is_active` tinyint(2) NOT NULL DEFAULT '1',
+  `slug` varchar(255) NOT NULL,
+  `is_display` tinyint(2) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `enquiries`
+--
+
+CREATE TABLE `enquiries` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `exam_id` int(11) DEFAULT NULL,
+  `course_id` int(11) DEFAULT NULL,
+  `subject_id` int(11) DEFAULT NULL,
+  `chapter_id` int(11) DEFAULT NULL,
+  `message` text NOT NULL,
+  `reply` text DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `image_for_user` text DEFAULT NULL,
+  `replied_by` int(11) DEFAULT NULL,
+  `replied_time` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `event_comments`
+--
+
+CREATE TABLE `event_comments` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `event_id` int(11) NOT NULL,
+  `comment` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exams`
+--
+
+CREATE TABLE `exams` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `slug` varchar(255) DEFAULT NULL,
+  `description` mediumtext DEFAULT NULL,
+  `thumbnail` mediumtext DEFAULT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT '1',
+  `position` int(50) DEFAULT 0,
+  `views` int(50) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `faculty_subjects`
+--
+
+CREATE TABLE `faculty_subjects` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(50) NOT NULL,
+  `subject_id` int(50) NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `faqs`
+--
+
+CREATE TABLE `faqs` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `question` mediumtext DEFAULT NULL,
+  `answer` mediumtext DEFAULT NULL,
+  `position` int(50) NOT NULL DEFAULT '1',
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `approved` tinyint(1) NOT NULL DEFAULT '1',
+  `rejected_on` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `image_size_limits`
+--
+
+CREATE TABLE `image_size_limits` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `width` int(50) DEFAULT NULL,
+  `height` int(50) DEFAULT NULL,
+  `minWidth` int(50) DEFAULT NULL,
+  `minHeight` int(50) DEFAULT NULL,
+  `maxWidth` int(50) DEFAULT NULL,
+  `maxHeight` int(50) DEFAULT NULL,
+  `label` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `languages`
+--
+
+CREATE TABLE `languages` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `is_active` tinyint(2) NOT NULL DEFAULT '1',
+  `position` int(50) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `live_events`
+--
+
+CREATE TABLE `live_events` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `exam_ids` mediumtext DEFAULT NULL,
+  `title` mediumtext DEFAULT NULL,
+  `description` mediumtext NOT NULL,
+  `thumbnail` mediumtext DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `type` enum('ONE-TIME','RECURRING') NOT NULL DEFAULT 'ONE-TIME',
+  `event_id` varchar(255) DEFAULT NULL,
+  `video_id` varchar(255) DEFAULT NULL,
+  `duration` varchar(255) DEFAULT NULL,
+  `tags` mediumtext DEFAULT NULL,
+  `course_ids` mediumtext DEFAULT NULL,
+  `subject_ids` mediumtext DEFAULT NULL,
+  `chapter_ids` mediumtext DEFAULT NULL,
+  `schedule_at` varchar(255) DEFAULT NULL,
+  `batch_ids` mediumtext DEFAULT NULL,
+  `zoom_url` varchar(255) DEFAULT NULL,
+  `zoom_id` varchar(255) DEFAULT NULL,
+  `zoom_type` varchar(50) DEFAULT NULL,
+  `zoom_uuid` varchar(255) DEFAULT NULL,
+  `zoom_status` varchar(50) DEFAULT NULL,
+  `occurrence_id` varchar(255) DEFAULT NULL,
+  `started_by` int(11) DEFAULT NULL,
+  `event_status` enum('NOT_STARTED','STARTED','ENDED') NOT NULL DEFAULT 'NOT_STARTED',
+  `approved` tinyint(4) NOT NULL DEFAULT '1',
+  `created_by` int(11) DEFAULT NULL,
+  `views` int(50) NOT NULL,
+  `comments` int(50) DEFAULT 0,
+  `position` int(50) NOT NULL DEFAULT '1',
+  `mode` enum('FREE','PAID') NOT NULL DEFAULT 'PAID',
+  `converted` tinyint(4) NOT NULL DEFAULT 0,
+  `group_id` varchar(255) DEFAULT NULL,
+  `status` enum('active','deactive') NOT NULL DEFAULT 'active',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_active` int(4) NOT NULL DEFAULT '1',
+  `language_id` int(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `logs`
+--
+
+CREATE TABLE `logs` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `action` varchar(64) DEFAULT NULL,
+  `payload` mediumtext DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `modules`
+--
+
+CREATE TABLE `modules` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `type` enum('Applications','APP','Dashboard') DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `icon` varchar(255) DEFAULT NULL,
+  `parent_id` int(10) UNSIGNED DEFAULT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT '1',
+  `position` int(11) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `one_line_questions`
+--
+
+CREATE TABLE `one_line_questions` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `question` text NOT NULL,
+  `answer` text NOT NULL,
+  `bank_id` int(11) UNSIGNED NOT NULL,
+  `views` int(50) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `language_id` int(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `order_number` varchar(255) DEFAULT NULL,
+  `uuid` varchar(255) DEFAULT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `amount` double(10,2) NOT NULL,
+  `status` enum('PENDING','SUCCESS','FAILED') NOT NULL DEFAULT 'PENDING',
+  `transaction_id` int(11) DEFAULT NULL,
+  `is_upgraded` tinyint(2) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `shipping_charges` double(10,2) NOT NULL DEFAULT 0.00,
+  `final_price` double(10,2) NOT NULL DEFAULT 0.00,
+  `coupon` varchar(255) DEFAULT NULL,
+  `total_tax` double(10,2) NOT NULL DEFAULT 0.00,
+  `total_discount` double(10,2) NOT NULL DEFAULT 0.00,
+  `pay_via` enum('ONLINE','RTGS/NEFT','CASH','FREE') NOT NULL DEFAULT 'ONLINE',
+  `assigned_by_admin` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `packages`
+--
+
+CREATE TABLE `packages` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `subject_ids` mediumtext DEFAULT NULL,
+  `course_ids` text DEFAULT NULL,
+  `amount` varchar(255) NOT NULL,
+  `validity` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `status` enum('active','deactive') NOT NULL DEFAULT 'active',
+  `position` int(50) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment_methods`
+--
+
+CREATE TABLE `payment_methods` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `details` mediumtext DEFAULT NULL,
+  `is_active` tinyint(2) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_default` tinyint(4) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `permission_types`
+--
+
+CREATE TABLE `permission_types` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `is_active` tinyint(2) NOT NULL DEFAULT '1',
+  `label` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `popup_models`
+--
+
+CREATE TABLE `popup_models` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `page_url` varchar(255) NOT NULL,
+  `image` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `link` text DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `posts`
+--
+
+CREATE TABLE `posts` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `body` text DEFAULT NULL,
+  `comments` int(50) DEFAULT 0,
+  `exam_id` int(11) DEFAULT NULL,
+  `course_id` int(11) DEFAULT NULL,
+  `chapter_id` int(11) DEFAULT NULL,
+  `subject_id` int(11) DEFAULT NULL,
+  `closed` tinyint(4) NOT NULL DEFAULT 0,
+  `hide` tinyint(4) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `previous_year_question_papers`
+--
+
+CREATE TABLE `previous_year_question_papers` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `exam_ids` mediumtext DEFAULT NULL,
+  `course_ids` mediumtext DEFAULT NULL,
+  `subject_ids` mediumtext DEFAULT NULL,
+  `chapter_ids` mediumtext DEFAULT NULL,
+  `title` text NOT NULL,
+  `url` mediumtext DEFAULT NULL,
+  `bank_id` int(11) UNSIGNED DEFAULT NULL,
+  `views` int(50) NOT NULL DEFAULT 0,
+  `approved` tinyint(4) NOT NULL DEFAULT '1',
+  `mode` enum('FREE','PAID') NOT NULL DEFAULT 'PAID',
+  `position` int(50) NOT NULL DEFAULT '1',
+  `created_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_active` int(4) NOT NULL DEFAULT '1',
+  `rejected_on` int(11) DEFAULT NULL,
+  `language_id` int(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `exam_ids` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`exam_ids`)),
+  `course_ids` mediumtext DEFAULT NULL,
+  `subject_ids` mediumtext DEFAULT NULL,
+  `course_type_id` int(11) DEFAULT NULL,
+  `uuid` varchar(255) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `amount` double(10,2) DEFAULT '1'.00,
+  `model` varchar(255) DEFAULT NULL,
+  `cover_image` varchar(255) DEFAULT NULL,
+  `ordered` int(100) NOT NULL DEFAULT 0,
+  `liked` int(100) NOT NULL DEFAULT 0,
+  `slug` varchar(255) DEFAULT NULL,
+  `viewed` int(100) NOT NULL DEFAULT '1',
+  `description` mediumtext DEFAULT NULL,
+  `is_upgradable` tinyint(2) DEFAULT '1',
+  `is_active` tinyint(2) NOT NULL DEFAULT '1',
+  `upgradable_amount` double(10,2) DEFAULT NULL,
+  `details` mediumtext DEFAULT NULL,
+  `group_id` varchar(255) DEFAULT NULL,
+  `position` int(50) NOT NULL DEFAULT '1',
+  `tax_included` tinyint(4) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `product_type_id` int(11) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_attributes`
+--
+
+CREATE TABLE `product_attributes` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `product_id` int(11) UNSIGNED NOT NULL,
+  `attribute_id` int(11) UNSIGNED NOT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  `value_id` int(11) UNSIGNED DEFAULT NULL,
+  `value_price` double(10,2) DEFAULT NULL,
+  `price_type` enum('INCREMENT','DECREMENT','REPLACE') NOT NULL DEFAULT 'REPLACE',
+  `price_unit` enum('PERCENT','AMOUNT') NOT NULL DEFAULT 'PERCENT',
+  `is_default` int(2) DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_images`
+--
+
+CREATE TABLE `product_images` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `product_id` int(11) UNSIGNED NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_reviews`
+--
+
+CREATE TABLE `product_reviews` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) UNSIGNED NOT NULL,
+  `ratting` int(50) NOT NULL,
+  `message` mediumtext DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_types`
+--
+
+CREATE TABLE `product_types` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` mediumtext DEFAULT NULL,
+  `is_active` tinyint(2) NOT NULL DEFAULT '1',
+  `position` int(50) NOT NULL DEFAULT '1',
+  `is_package` tinyint(2) NOT NULL DEFAULT 0,
+  `selling_on` tinyint(1) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `push_notifications`
+--
+
+CREATE TABLE `push_notifications` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `title` text NOT NULL,
+  `body` mediumtext NOT NULL,
+  `product_ids` mediumtext DEFAULT NULL,
+  `course_ids` mediumtext DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `questions`
+--
+
+CREATE TABLE `questions` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `exam_id` int(11) UNSIGNED DEFAULT NULL,
+  `title` text NOT NULL,
+  `body` mediumtext NOT NULL,
+  `answer` mediumtext NOT NULL,
+  `options` mediumtext DEFAULT NULL,
+  `is_image_based_question` tinyint(1) NOT NULL DEFAULT 0,
+  `image` mediumtext DEFAULT NULL,
+  `bank_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `question_banks`
+--
+
+CREATE TABLE `question_banks` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `exam_ids` mediumtext DEFAULT NULL,
+  `name` varchar(512) NOT NULL,
+  `course_ids` mediumtext DEFAULT NULL,
+  `subject_ids` mediumtext DEFAULT NULL,
+  `chapter_ids` mediumtext DEFAULT NULL,
+  `approved` tinyint(4) NOT NULL DEFAULT '1',
+  `position` int(50) NOT NULL DEFAULT '1',
+  `created_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_active` int(4) NOT NULL DEFAULT '1',
+  `language_id` int(50) DEFAULT NULL,
+  `rejected_on` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `raise_tickets`
+--
+
+CREATE TABLE `raise_tickets` (
+  `id` int(11) NOT NULL,
+  `ticket_id` int(11) UNSIGNED NOT NULL,
+  `message` mediumtext DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `ticket_type` enum('QUERY','RESPONSE') NOT NULL DEFAULT 'QUERY',
+  `response_by` int(11) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `send_sms`
+--
+
+CREATE TABLE `send_sms` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `message` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sessions`
+--
+
+CREATE TABLE `sessions` (
+  `sid` varchar(128) COLLATE utf16_unicode_ci DEFAULT NULL,
+  `sess` longtext COLLATE utf16_unicode_ci DEFAULT NULL,
+  `expired` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `label` varchar(255) NOT NULL,
+  `key` varchar(255) DEFAULT NULL,
+  `parent` varchar(255) DEFAULT NULL,
+  `value` mediumtext DEFAULT NULL,
+  `can_update` tinyint(2) NOT NULL DEFAULT '1',
+  `reference` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `watch` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shipping_methods`
+--
+
+CREATE TABLE `shipping_methods` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `amount_type` enum('PERCENT','AMOUNT') NOT NULL DEFAULT 'AMOUNT',
+  `amount` double(10,2) DEFAULT NULL,
+  `is_active` tinyint(2) NOT NULL DEFAULT '1',
+  `position` int(50) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `states`
+--
+
+CREATE TABLE `states` (
+  `id` int(5) UNSIGNED NOT NULL,
+  `short_code` char(3) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` char(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country` char(64) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'India',
+  `is_active` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subjects`
+--
+
+CREATE TABLE `subjects` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `exam_ids` mediumtext DEFAULT NULL,
+  `name` varchar(512) NOT NULL,
+  `slug` varchar(255) DEFAULT NULL,
+  `course_ids` mediumtext DEFAULT NULL,
+  `thumbnail` varchar(255) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `views` int(50) NOT NULL DEFAULT 0,
+  `position` int(11) DEFAULT NULL,
+  `group_id` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `syllabus`
+--
+
+CREATE TABLE `syllabus` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `exam_ids` mediumtext DEFAULT NULL,
+  `course_ids` mediumtext DEFAULT NULL,
+  `subject_ids` mediumtext DEFAULT NULL,
+  `chapter_ids` mediumtext DEFAULT NULL,
+  `topics` longtext NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `approved` tinyint(1) NOT NULL DEFAULT '1',
+  `rejected_on` varchar(255) DEFAULT NULL,
+  `position` int(50) NOT NULL DEFAULT '1',
+  `created_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `taxes`
+--
+
+CREATE TABLE `taxes` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` mediumtext DEFAULT NULL,
+  `is_active` tinyint(2) NOT NULL DEFAULT '1',
+  `amount` double(10,2) NOT NULL DEFAULT 0.00,
+  `amount_type` enum('PERCENT','AMOUNT') NOT NULL,
+  `position` int(50) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tickets`
+--
+
+CREATE TABLE `tickets` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `mobile_number` varchar(255) NOT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `query` mediumtext NOT NULL,
+  `is_user` tinyint(4) NOT NULL DEFAULT 0,
+  `user_id` int(11) DEFAULT NULL,
+  `status` enum('CREATED','IN_PROCESS','CLOSED') NOT NULL DEFAULT 'CREATED',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transactions`
+--
+
+CREATE TABLE `transactions` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `transaction_id` varchar(255) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `status` enum('CREATED','SUCCESS','FAILED','IN_PROGRESS') NOT NULL DEFAULT 'CREATED',
+  `bank_ref_no` varchar(255) DEFAULT NULL,
+  `amount` double(10,2) DEFAULT NULL,
+  `card_name` varchar(255) DEFAULT NULL,
+  `tracking` varchar(255) DEFAULT NULL,
+  `signature` varchar(255) DEFAULT NULL,
+  `order_id` varchar(255) DEFAULT NULL,
+  `invoice_number` varchar(255) DEFAULT NULL,
+  `response` mediumtext DEFAULT NULL,
+  `currency` varchar(255) NOT NULL,
+  `payment_mode` varchar(255) DEFAULT NULL,
+  `trans_date` varchar(255) DEFAULT NULL,
+  `payment_method_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `uuid` text DEFAULT NULL,
+  `device_id` text DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `auth_provider` varchar(255) DEFAULT NULL,
+  `oauth_id` mediumtext DEFAULT NULL,
+  `first_name` varchar(128) NOT NULL,
+  `last_name` varchar(128) NOT NULL,
+  `mobile_number` varchar(12) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `type` enum('USER','ADMIN','MANAGEMENT','FACULTY') NOT NULL DEFAULT 'USER',
+  `dob` varchar(255) DEFAULT NULL,
+  `fcm_token` varchar(512) DEFAULT NULL,
+  `device_type` varchar(255) DEFAULT NULL,
+  `registration_number` varchar(255) DEFAULT NULL,
+  `branch` varchar(255) NOT NULL,
+  `package_id` int(11) DEFAULT NULL,
+  `passing_year` varchar(255) DEFAULT NULL,
+  `sms_ver_code` varchar(255) DEFAULT NULL,
+  `email_ver_code` varchar(255) DEFAULT NULL,
+  `is_mobile_verified` tinyint(1) NOT NULL DEFAULT 0,
+  `is_email_verified` tinyint(1) NOT NULL DEFAULT 0,
+  `is_active` tinyint(1) NOT NULL DEFAULT 0,
+  `is_suspended` tinyint(4) NOT NULL DEFAULT 0,
+  `video_view_limit` int(50) NOT NULL DEFAULT 0,
+  `video_count` int(50) NOT NULL DEFAULT 0,
+  `gender` varchar(255) DEFAULT NULL,
+  `category` varchar(255) DEFAULT NULL,
+  `device_model` varchar(255) DEFAULT NULL,
+  `device_brand` varchar(255) DEFAULT NULL,
+  `designation` varchar(255) DEFAULT NULL,
+  `whatsapp_number` varchar(50) DEFAULT NULL,
+  `machine_id` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `removed_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_access`
+--
+
+CREATE TABLE `user_access` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `knowledge_base` tinyint(4) NOT NULL DEFAULT '1',
+  `question_bank` tinyint(11) NOT NULL DEFAULT '1',
+  `one_liner_question` tinyint(4) NOT NULL DEFAULT '1',
+  `pyq_papers` tinyint(4) NOT NULL DEFAULT '1',
+  `videos` tinyint(4) NOT NULL DEFAULT '1',
+  `blogs` tinyint(4) NOT NULL DEFAULT '1',
+  `users` tinyint(4) NOT NULL DEFAULT '1',
+  `enquiries` tinyint(4) NOT NULL DEFAULT '1',
+  `forum` tinyint(4) NOT NULL DEFAULT '1',
+  `app_config` tinyint(4) NOT NULL DEFAULT '1',
+  `raise_tickets` tinyint(4) NOT NULL DEFAULT '1',
+  `subject_wise` tinyint(4) NOT NULL DEFAULT '1',
+  `subject_ids` mediumtext DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_guardians`
+--
+
+CREATE TABLE `user_guardians` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `guardian_relation` varchar(255) DEFAULT NULL,
+  `guardian_name` varchar(255) DEFAULT NULL,
+  `guardian_occupation` varchar(255) DEFAULT NULL,
+  `guardian_mobile_number` varchar(255) DEFAULT NULL,
+  `guardian_email` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_permissions`
+--
+
+CREATE TABLE `user_permissions` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `module_id` int(11) UNSIGNED NOT NULL,
+  `permission_type_id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_product_attributes`
+--
+
+CREATE TABLE `user_product_attributes` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `cart_id` int(11) UNSIGNED NOT NULL,
+  `product_id` int(11) UNSIGNED NOT NULL,
+  `attribute_id` int(11) NOT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  `value_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_verification_codes`
+--
+
+CREATE TABLE `user_verification_codes` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(50) NOT NULL,
+  `otp` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `validities`
+--
+
+CREATE TABLE `validities` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `duration` double(10,2) DEFAULT NULL,
+  `duration_type` enum('DAYS','MONTH','YEAR') NOT NULL DEFAULT 'DAYS',
+  `date` varchar(50) DEFAULT NULL,
+  `type` enum('DATE','DAYS') NOT NULL DEFAULT 'DAYS',
+  `is_active` tinyint(4) NOT NULL DEFAULT '1',
+  `position` int(50) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `videos`
+--
+
+CREATE TABLE `videos` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `exam_ids` mediumtext DEFAULT NULL,
+  `title` text NOT NULL,
+  `description` mediumtext DEFAULT NULL,
+  `thumbnail` varchar(255) DEFAULT NULL,
+  `video_id` mediumtext NOT NULL,
+  `duration` varchar(255) NOT NULL,
+  `tags` mediumtext DEFAULT NULL,
+  `chapter_ids` mediumtext DEFAULT NULL,
+  `course_ids` mediumtext DEFAULT NULL,
+  `subject_ids` mediumtext DEFAULT NULL,
+  `views` int(50) NOT NULL DEFAULT 0,
+  `likes` int(50) NOT NULL DEFAULT 0,
+  `dislikes` int(50) NOT NULL DEFAULT 0,
+  `status` enum('active','deactive') NOT NULL DEFAULT 'active',
+  `on_vimeo` tinyint(4) NOT NULL DEFAULT '1',
+  `position` int(50) DEFAULT NULL,
+  `mode` enum('FREE','PAID') NOT NULL DEFAULT 'PAID',
+  `comments` int(50) NOT NULL DEFAULT 0,
+  `approved` tinyint(4) NOT NULL DEFAULT '1',
+  `type` enum('FULL-COURSE','CRASH-COURSE') NOT NULL DEFAULT 'FULL-COURSE',
+  `group_id` varchar(255) DEFAULT NULL,
+  `language_id` int(50) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_active` int(4) NOT NULL DEFAULT '1',
+  `rejected_on` int(11) DEFAULT NULL,
+  `base_type` enum('UPLOADED','CONVERTED') NOT NULL DEFAULT 'UPLOADED'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `video_comments`
+--
+
+CREATE TABLE `video_comments` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `video_id` int(11) NOT NULL,
+  `comment` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `video_likes`
+--
+
+CREATE TABLE `video_likes` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `video_id` int(11) NOT NULL,
+  `type` enum('LIKE','DISLIKE') NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `video_watchlist`
+--
+
+CREATE TABLE `video_watchlist` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `video_id` int(11) UNSIGNED NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wishlists`
+--
+
+CREATE TABLE `wishlists` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `product_id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `zoom_meeting_types`
+--
+
+CREATE TABLE `zoom_meeting_types` (
+  `id` int(11) NOT NULL,
+  `label` varchar(255) NOT NULL,
+  `value` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `zoom_schedules`
+--
+
+CREATE TABLE `zoom_schedules` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `batch_id` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `zoom_link` varchar(255) DEFAULT NULL,
+  `is_sended` tinyint(1) NOT NULL DEFAULT 0,
+  `push_schedule_date` varchar(255) NOT NULL,
+  `push_schedule_time` varchar(255) NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `academic_details`
+--
+ALTER TABLE `academic_details`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `addresses`
+--
+ALTER TABLE `addresses`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `admin_notifications`
+--
+ALTER TABLE `admin_notifications`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `announcements`
+--
+ALTER TABLE `announcements`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `app_modules`
+--
+ALTER TABLE `app_modules`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `attributes`
+--
+ALTER TABLE `attributes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `attribute_referances`
+--
+ALTER TABLE `attribute_referances`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `attribute_values`
+--
+ALTER TABLE `attribute_values`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `banners`
+--
+ALTER TABLE `banners`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `batches`
+--
+ALTER TABLE `batches`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `batch_schedules`
+--
+ALTER TABLE `batch_schedules`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `blogs`
+--
+ALTER TABLE `blogs`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `slug` (`slug`);
+
+--
+-- Indexes for table `blog_comments`
+--
+ALTER TABLE `blog_comments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `carts`
+--
+ALTER TABLE `carts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `chapters`
+--
+ALTER TABLE `chapters`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `comment_replies`
+--
+ALTER TABLE `comment_replies`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `compatibilities`
+--
+ALTER TABLE `compatibilities`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `coupons`
+--
+ALTER TABLE `coupons`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `courses`
+--
+ALTER TABLE `courses`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `course_types`
+--
+ALTER TABLE `course_types`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `days`
+--
+ALTER TABLE `days`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `discount_types`
+--
+ALTER TABLE `discount_types`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `enquiries`
+--
+ALTER TABLE `enquiries`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `event_comments`
+--
+ALTER TABLE `event_comments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `exams`
+--
+ALTER TABLE `exams`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `faculty_subjects`
+--
+ALTER TABLE `faculty_subjects`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `faqs`
+--
+ALTER TABLE `faqs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `image_size_limits`
+--
+ALTER TABLE `image_size_limits`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `languages`
+--
+ALTER TABLE `languages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `live_events`
+--
+ALTER TABLE `live_events`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `logs`
+--
+ALTER TABLE `logs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `modules`
+--
+ALTER TABLE `modules`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `one_line_questions`
+--
+ALTER TABLE `one_line_questions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `packages`
+--
+ALTER TABLE `packages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `payment_methods`
+--
+ALTER TABLE `payment_methods`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `permission_types`
+--
+ALTER TABLE `permission_types`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `popup_models`
+--
+ALTER TABLE `popup_models`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `posts`
+--
+ALTER TABLE `posts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `previous_year_question_papers`
+--
+ALTER TABLE `previous_year_question_papers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `product_attributes`
+--
+ALTER TABLE `product_attributes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `product_images`
+--
+ALTER TABLE `product_images`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `product_reviews`
+--
+ALTER TABLE `product_reviews`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `product_types`
+--
+ALTER TABLE `product_types`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `push_notifications`
+--
+ALTER TABLE `push_notifications`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `questions`
+--
+ALTER TABLE `questions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `question_banks`
+--
+ALTER TABLE `question_banks`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `raise_tickets`
+--
+ALTER TABLE `raise_tickets`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `send_sms`
+--
+ALTER TABLE `send_sms`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `sessions`
+--
+ALTER TABLE `sessions`
+  ADD UNIQUE KEY `sid` (`sid`);
+
+--
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `shipping_methods`
+--
+ALTER TABLE `shipping_methods`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `states`
+--
+ALTER TABLE `states`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `subjects`
+--
+ALTER TABLE `subjects`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `syllabus`
+--
+ALTER TABLE `syllabus`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `taxes`
+--
+ALTER TABLE `taxes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tickets`
+--
+ALTER TABLE `tickets`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `transactions`
+--
+ALTER TABLE `transactions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_access`
+--
+ALTER TABLE `user_access`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_guardians`
+--
+ALTER TABLE `user_guardians`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_permissions`
+--
+ALTER TABLE `user_permissions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_product_attributes`
+--
+ALTER TABLE `user_product_attributes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_verification_codes`
+--
+ALTER TABLE `user_verification_codes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `validities`
+--
+ALTER TABLE `validities`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `videos`
+--
+ALTER TABLE `videos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `video_comments`
+--
+ALTER TABLE `video_comments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `video_likes`
+--
+ALTER TABLE `video_likes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `video_watchlist`
+--
+ALTER TABLE `video_watchlist`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `wishlists`
+--
+ALTER TABLE `wishlists`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `zoom_meeting_types`
+--
+ALTER TABLE `zoom_meeting_types`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `zoom_schedules`
+--
+ALTER TABLE `zoom_schedules`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `academic_details`
+--
+ALTER TABLE `academic_details`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `addresses`
+--
+ALTER TABLE `addresses`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `admin_notifications`
+--
+ALTER TABLE `admin_notifications`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `announcements`
+--
+ALTER TABLE `announcements`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `app_modules`
+--
+ALTER TABLE `app_modules`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `attributes`
+--
+ALTER TABLE `attributes`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `attribute_referances`
+--
+ALTER TABLE `attribute_referances`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `attribute_values`
+--
+ALTER TABLE `attribute_values`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `banners`
+--
+ALTER TABLE `banners`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `batches`
+--
+ALTER TABLE `batches`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `batch_schedules`
+--
+ALTER TABLE `batch_schedules`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `blogs`
+--
+ALTER TABLE `blogs`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `blog_comments`
+--
+ALTER TABLE `blog_comments`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `carts`
+--
+ALTER TABLE `carts`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `chapters`
+--
+ALTER TABLE `chapters`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `comment_replies`
+--
+ALTER TABLE `comment_replies`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `compatibilities`
+--
+ALTER TABLE `compatibilities`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `coupons`
+--
+ALTER TABLE `coupons`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `courses`
+--
+ALTER TABLE `courses`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `course_types`
+--
+ALTER TABLE `course_types`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `days`
+--
+ALTER TABLE `days`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `discount_types`
+--
+ALTER TABLE `discount_types`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `enquiries`
+--
+ALTER TABLE `enquiries`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `event_comments`
+--
+ALTER TABLE `event_comments`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `exams`
+--
+ALTER TABLE `exams`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `faculty_subjects`
+--
+ALTER TABLE `faculty_subjects`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `faqs`
+--
+ALTER TABLE `faqs`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `image_size_limits`
+--
+ALTER TABLE `image_size_limits`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `languages`
+--
+ALTER TABLE `languages`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `live_events`
+--
+ALTER TABLE `live_events`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `logs`
+--
+ALTER TABLE `logs`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `modules`
+--
+ALTER TABLE `modules`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `one_line_questions`
+--
+ALTER TABLE `one_line_questions`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `packages`
+--
+ALTER TABLE `packages`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `payment_methods`
+--
+ALTER TABLE `payment_methods`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `permission_types`
+--
+ALTER TABLE `permission_types`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `popup_models`
+--
+ALTER TABLE `popup_models`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `previous_year_question_papers`
+--
+ALTER TABLE `previous_year_question_papers`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `product_attributes`
+--
+ALTER TABLE `product_attributes`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `product_images`
+--
+ALTER TABLE `product_images`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `product_reviews`
+--
+ALTER TABLE `product_reviews`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `product_types`
+--
+ALTER TABLE `product_types`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `push_notifications`
+--
+ALTER TABLE `push_notifications`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `questions`
+--
+ALTER TABLE `questions`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `question_banks`
+--
+ALTER TABLE `question_banks`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `raise_tickets`
+--
+ALTER TABLE `raise_tickets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `send_sms`
+--
+ALTER TABLE `send_sms`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `shipping_methods`
+--
+ALTER TABLE `shipping_methods`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `states`
+--
+ALTER TABLE `states`
+  MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `subjects`
+--
+ALTER TABLE `subjects`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `syllabus`
+--
+ALTER TABLE `syllabus`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `taxes`
+--
+ALTER TABLE `taxes`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tickets`
+--
+ALTER TABLE `tickets`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `transactions`
+--
+ALTER TABLE `transactions`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user_access`
+--
+ALTER TABLE `user_access`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user_guardians`
+--
+ALTER TABLE `user_guardians`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user_permissions`
+--
+ALTER TABLE `user_permissions`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user_product_attributes`
+--
+ALTER TABLE `user_product_attributes`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user_verification_codes`
+--
+ALTER TABLE `user_verification_codes`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `validities`
+--
+ALTER TABLE `validities`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `videos`
+--
+ALTER TABLE `videos`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `video_comments`
+--
+ALTER TABLE `video_comments`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `video_likes`
+--
+ALTER TABLE `video_likes`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `video_watchlist`
+--
+ALTER TABLE `video_watchlist`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `wishlists`
+--
+ALTER TABLE `wishlists`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `zoom_meeting_types`
+--
+ALTER TABLE `zoom_meeting_types`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `zoom_schedules`
+--
+ALTER TABLE `zoom_schedules`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

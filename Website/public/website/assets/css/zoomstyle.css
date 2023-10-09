@@ -1,0 +1,106 @@
+
+.ReactModal__Body--open .footer {
+  width: 100%;
+  height: 52px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#234767), to(#1d8996)) !important;
+  background-image: linear-gradient(65deg, #234767 0%, #1d8996 100%) !important;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  z-index: 20;
+  -webkit-transition: -webkit-transform 0.2s ease-out;
+  transition: -webkit-transform 0.2s ease-out;
+  -o-transition: transform 0.2s ease-out;
+  transition: transform 0.2s ease-out;
+  transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
+}
+
+
+.ReactModal__Body--open  #zmmtg-root {
+  background-image: url(/website/assets/images/loader.gif) !important;
+  background-color: #ffffff !important;
+}
+
+.ReactModal__Body--open .webbgdashboard {
+  background: url(/website/assets/images/bg/webdashboard.jpg);
+  background-repeat: no-repeat;
+  min-height: 100%;
+  }
+
+  .ReactModal__Body--open   .joinWindowBtn {
+    height: 46px !important;
+    line-height: inherit !important;
+    color: white !important;
+    font-size: 18px !important;
+    text-align: center !important;
+    min-width: 200px !important;
+    background-color: #dc2626 !important;
+    /* border-color: #2d8cff !important; */
+}
+
+.ReactModal__Body--open #wc-loading {
+  width: 100%;
+  height: 100%;
+  background: url(/website/assets/images/bg/webdashboard.jpg) !important;
+  position: relative;
+  text-align: center;
+}
+
+.ReactModal__Body--open .gallery-video-container__wrap {
+  background: url(/website/assets/images/bg/webdashboard.jpg) !important;
+}
+
+.ReactModal__Body--open .loading-img {
+  width: 100px !important;
+  -webkit-animation: wc-spin infinite 1.5s linear;
+  animation: wc-spin infinite 1.5s linear;
+  margin-left: 18% !important;
+}
+
+.ReactModal__Body--open .join-meeting{
+  color: #1d8996 !important;
+  position: center !important;
+}
+
+.ReactModal__Body--open #wc-footer .open .dropdown-toggle.btn-default {
+  background-color: #0000002e!important;
+  border: 0 !important;
+}
+
+.ReactModal__Body--open .btn-default {
+  color: #333;
+  background-color: #0000002e!important;
+  border: 0 !important;
+}
+
+.ReactModal__Body--open .speaker-view {
+  background: url(/website/assets/images/bg/webdashboard.jpg) !important;
+}
+
+.ReactModal__Body--open .speaker-view__canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: url(/website/assets/images/bg/webdashboard.jpg) !important;
+  background-size: cover;
+}
+
+.back-btn{
+  position: absolute;
+  font-size: 21px;
+    padding: 1rem 1.5rem;
+    /* height: 3rem; */
+    /* width: 25%; */
+    top: 1rem;
+    border-radius: 50%;
+    left: 1rem;
+    background-color: #23476730;
+    z-index: 999;
+}
+.back-btn i{
+  color: #234767;
+}
+
+

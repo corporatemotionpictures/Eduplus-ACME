@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "ACME Academy",
+    "slug": "ACME Academy",
+    "privacy": "public",
+    "version": "1.0.0",
+    "sdkVersion": "36.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#19212c"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "eduplus.www.acmeacademy.in",
+      "buildNumber": "1.0.0",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "eduplus.www.acmeacademy.in",
+      "versionCode": 1
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
+  },
+  "displayName": "ACME Academy",
+  "name": "ACME Academy"
+}
